@@ -1,5 +1,5 @@
 {
-  "name": "cloud-storage-client",
+  "name": "detectTextSub",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -10,9 +10,6 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@google-cloud/storage": "^2.4.2",
-    "dotenv": "^6.2.0",
-    "react": "^16.8.3",
-    "react-dom": "^16.8.3"
+    "safe-buffer": "^5.1.2"
   }
 }
