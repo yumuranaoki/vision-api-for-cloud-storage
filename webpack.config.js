@@ -18,6 +18,9 @@ module.exports = {
               presets: [
                 '@babel/preset-env',
                 '@babel/react'
+              ],
+              plugins: [
+                "@babel/plugin-proposal-class-properties"
               ]
             },
           }
@@ -29,6 +32,9 @@ module.exports = {
   plugins: [
     new Dotenv()
   ],
+  node: {
+    fs: 'empty'
+  },
   devServer: {
     contentBase: `${__dirname}/dist`,
     compress: true,

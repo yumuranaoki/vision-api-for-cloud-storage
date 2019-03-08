@@ -1,7 +1,8 @@
 import React from 'react';
-import firebase from 'firebase';
+import { initializedFirebase } from './util/firebase';
 
 class List extends React.Component {
+  isMounted = false;
   constructor (props) {
     super(props);
     this.state = {
@@ -10,14 +11,10 @@ class List extends React.Component {
   }
 
   componentDidMount() {
-    firebase.initializeApp({
-      apiKey: process.env.API_KEY,
-      authDomain: process.env.AUTH_DOMAIN,
-      projectId: process.env.PROJECT_ID,
-    })
+    this.isMounted = true;
 
-    const db = firebase.firestore();
-    db.collection("receipt").get()
+    this.db = initializedFirebase.firestore();
+    this.db.collection("receipt").get()
     .then(querySnapShot => {
       const textArray = [];
       console.log(querySnapShot);
@@ -26,7 +23,16 @@ class List extends React.Component {
         textArray.push(doc.data().text)
       })
       return textArray;
-    }).then(res => this.setState({ textArray: res }));
+    }).then(res => {
+        if (this.isMounted) {
+          this.setState({ textArray: res })
+        }
+      }
+    );
+  }
+
+  componentWillUnmount() {
+    this.isMounted = false;
   }
 
   render() {
