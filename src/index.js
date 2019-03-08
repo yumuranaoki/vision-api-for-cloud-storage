@@ -6,7 +6,7 @@ import List from './list';
 const App = () => {
   return (
     <div>
-      <h1>Hello World</h1>
+      <h1>Recipt</h1>
       <Form />
       <List />
     </div>
