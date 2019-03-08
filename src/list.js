@@ -13,26 +13,22 @@ class List extends React.Component {
   componentDidMount() {
     this.isMounted = true;
 
-    this.db = initializedFirebase.firestore();
-    this.db.collection("receipt").get()
-    .then(querySnapShot => {
+    const db = initializedFirebase.firestore();
+    this.unsubscribe = db.collection("receipt").onSnapshot(querySnapshot => {
       const textArray = [];
-      console.log(querySnapShot);
-      querySnapShot.forEach(doc => {
-        console.log(`${doc.id} => ${doc.data().text}`);
-        textArray.push(doc.data().text)
+      querySnapshot.forEach(doc => {
+        textArray.push(doc.data().text);
       })
-      return textArray;
-    }).then(res => {
-        if (this.isMounted) {
-          this.setState({ textArray: res })
-        }
+      console.log('list: ', textArray.join(', '));
+      if (this.isMounted) {
+        this.setState({ textArray })
       }
-    );
+    })
   }
 
   componentWillUnmount() {
     this.isMounted = false;
+    this.unsubscribe();
   }
 
   render() {

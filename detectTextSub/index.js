@@ -8,11 +8,15 @@ exports.detectTextSub = (event, callback) => {
   const firebase = require('firebase');
   require("firebase/firestore");
 
-  firebase.initializeApp({
-    apiKey: process.env.API_KEY,
-    authDomain: process.env.AUTH_DOMAIN,
-    projectId: process.env.PROJECT_ID,
-  })
+  const protoLoader = require('@grpc/proto-loader')
+
+  if (!firebase.apps.length) {
+    firebase.initializeApp({
+      apiKey: process.env.API_KEY,
+      authDomain: process.env.AUTH_DOMAIN,
+      projectId: process.env.PROJECT_ID,
+    })
+  }
 
   const db = firebase.firestore();
   db.collection("receipt").add({

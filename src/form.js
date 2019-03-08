@@ -3,6 +3,7 @@ import { initializedFirebase } from './util/firebase';
 require('dotenv').config()
 
 class Form extends React.Component {
+  storageRef = null;
   constructor(props) {
     super(props);
     this.state = {
@@ -26,7 +27,15 @@ class Form extends React.Component {
     }
 
     const file = this.state.file;
-    
+    this.storageRef.child(file.name).put(file)
+    .then(snapshot => {
+      console.log('file uploaded');
+      console.log(snapshot);
+    })
+    .catch(err => {
+      console.log(err);
+    })
+
   }
 
   render() {
